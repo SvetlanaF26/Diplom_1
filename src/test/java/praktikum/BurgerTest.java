@@ -95,7 +95,6 @@ public class BurgerTest {
         assertEquals(expectedPrice, burger.getPrice(), 0.001f);
     }
 
-
     @Test
     public void testGetReceipt() {
         burger.setBuns(bun);
@@ -104,10 +103,19 @@ public class BurgerTest {
 
         String receipt = burger.getReceipt();
 
+        String expectedReceipt = String.format(
+                "(==== %s ====)%n" +
+                        "= %s %s =%n" +
+                        "= %s %s =%n" +
+                        "(==== %s ====)%n" +
+                        "%nPrice: %f%n",
+                bun.getName(),
+                ingredient1.getType().toString().toLowerCase(), ingredient1.getName(),
+                ingredient2.getType().toString().toLowerCase(), ingredient2.getName(),
+                bun.getName(),
+                burger.getPrice()
+        );
 
-        assertTrue(receipt.contains("(==== white bun ====)"));
-        assertTrue(receipt.contains("= filling cutlet ="));
-        assertTrue(receipt.contains("= sauce hot sauce ="));
-        assertTrue(receipt.contains("Price:"));
+        assertEquals(expectedReceipt, receipt);
     }
 }
